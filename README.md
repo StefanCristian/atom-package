@@ -1,5 +1,5 @@
-atom-package
-============
+atom-package 1.0
+================
 
 Atom packages built by Gentoo Portage or others tool.
 
