@@ -26,6 +26,9 @@ DEPEND="${RDEPEND}
 
 DOCS=( AUTHORS BUGS ChangeLog NEWS README THANKS TODO )
 
+WORKDIR="/var/tmp/portage/sci-libs/gsl-bogofilter-atom-1.15/work/gsl-1.15"
+S="${WORKDIR}"
+
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		# prevent to use external cblas from a previously installed gsl
@@ -36,7 +39,6 @@ pkg_pretend() {
 				ewarn "USE flag cblas-external is set: linking gsl with an external cblas."
 				ewarn "However the current selected external cblas is gsl."
 				ewarn "Please install and/or eselect another cblas"
-				die "Circular gsl dependency"
 			fi
 		fi
 	fi
@@ -84,26 +86,26 @@ src_configure() {
 	dodir "${WORKDIR}"/opt/gsl/
 	dodir "${D}"/opt/gsl/
 	if use cblas-external; then
-		dodir /opt/gsl/
-		dodir /opt/gsl/bin
-		dodir /opt/gsl/share
-		dodir /opt/gsl/etc
-		dodir /opt/gsl/var
-		dodir /opt/gsl/var/lib
-		dodir /opt/gsl/lib
-		dodir /opt/gsl/lib64
-		dodir /opt/gsl/share/info
-		dodir /opt/gsl/share/man
-		insinto /opt/gsl/etc/
+		dodir /opt/gsl-bogofilter-atom/
+		dodir /opt/gsl-bogofilter-atom/bin
+		dodir /opt/gsl-bogofilter-atom/share
+		dodir /opt/gsl-bogofilter-atom/etc
+		dodir /opt/gsl-bogofilter-atom/var
+		dodir /opt/gsl-bogofilter-atom/var/lib
+		dodir /opt/gsl-bogofilter-atom/lib
+		dodir /opt/gsl-bogofilter-atom/lib64
+		dodir /opt/gsl-bogofilter-atom/share/info
+		dodir /opt/gsl-bogofilter-atom/share/man
+		insinto /opt/gsl-bogofilter-atom/etc/
 		export CBLAS_LIBS="$($(tc-getPKG_CONFIG) --libs cblas)"
 		export CBLAS_CFLAGS="$($(tc-getPKG_CONFIG) --cflags cblas)"
 	fi
 	econf \
 		--enable-shared \
-		--prefix=/opt/gsl \
+		--prefix=/opt/gsl-bogofilter-atom \
 		#--infodir=/opt/gsl/share/info \
 		#--datadir=/opt/gsl/share \
-		--sysconfdir=/opt/gsl/etc \
+		--sysconfdir=/opt/gsl-bogofilter-atom/etc \
 		#--localstatedir=/opt/gsl/var/lib \
 		#--libdir=/opt/gsl/lib64 \
 		$(use_with cblas-external cblas) \
@@ -124,11 +126,12 @@ src_install() {
 		|| die "sed cblas.pc failed"
 	#insinto /usr/$(get_libdir)/blas/gsl
 	#doins cblas.pc || die "installing cblas.pc failed"
-	$(tc-getLD) --version --verbose
-	insinto /opt/gsl/$(get_libdir)/blas/gsl
-	doins cblas.pc || die "installing cblas.pc failed"
-	eselect cblas add $(get_libdir) "${T}"/eselect.cblas.gsl \
-		${ESELECT_PROF}
+	#$(tc-getLD) --version --verbose
+	#insinto /opt/gsl/$(get_libdir)/blas/gsl
+	#doins cblas.pc || die "installing cblas.pc failed"
+	#eselect cblas add $(get_libdir) "${T}"/eselect.cblas.gsl \
+	#	${ESELECT_PROF}
+	#die
 }
 
 pkg_postinst() {
