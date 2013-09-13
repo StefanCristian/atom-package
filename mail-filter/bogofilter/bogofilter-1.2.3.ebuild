@@ -23,8 +23,8 @@ DEPEND="virtual/libiconv
 			tokyocabinet? ( dev-db/tokyocabinet )
 			!tokyocabinet? ( >=sys-libs/db-3.2 )
 		)
-	)"
-#	sci-libs/gsl"
+	)
+	sci-libs/gsl-bogofilter-atom"
 #	app-arch/pax" # only needed for bf_tar
 RDEPEND="${DEPEND}"
 
