@@ -45,21 +45,21 @@ pkg_setup() {
 	fi
 }
 
-src_prepare() {
-	dodir /opt/bogofilter/
-	dodir /opt/bogofilter/static-libs/
-	cd "${WORKDIR}"/gsl-1.15/
-	econf --prefix="${WORKDIR}"/gsl-1.15
-	emake
-	find . -iname "*libgsl.so*" || die
-	dodir "${WORKDIR}"/gsl-1.15/static-libs
-	mkdir "${WORKDIR}"/gsl-1.15/static-libs || die
-	cp "${WORKDIR}"/gsl-1.15/.libs/libgsl.so* "${WORKDIR}"/gsl-1.15/static-libs/ || die
-	cp /usr/lib64/libdb-4.8.so "${WORKDIR}"/gsl-1.15/static-libs/ || die
+#src_prepare() {
+	#dodir /opt/bogofilter/
+	#dodir /opt/bogofilter/static-libs/
+	#cd "${WORKDIR}"/gsl-1.15/
+	#econf --prefix="${WORKDIR}"/gsl-1.15
+	#emake
+	#find . -iname "*libgsl.so*" || die
+	#dodir "${WORKDIR}"/gsl-1.15/static-libs
+	#mkdir "${WORKDIR}"/gsl-1.15/static-libs || die
+	#cp "${WORKDIR}"/gsl-1.15/.libs/libgsl.so* "${WORKDIR}"/gsl-1.15/static-libs/ || die
+	#cp /usr/lib64/libdb-4.8.so "${WORKDIR}"/gsl-1.15/static-libs/ || die
 	#insinto /opt/bogofilter/static-libs/
 	#cd /opt/bogofilter/static-libs/
 	#doins "${WORKDIR}"/gsl-1.15/.libs/libgsl.so*
-}
+#}
 
 src_configure() {
 	set -ex
