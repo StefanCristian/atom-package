@@ -1,0 +1,19 @@
+<repositories xmlns="" version="1.0">
+<repo quality="experimental" status="unofficial">
+<name>atom-package</name>
+<description>Atom Packages Gentoo Method</description>
+<homepage>
+https://github.com/BlackNoxis/atom-package/wiki/
+</homepage>
+<owner type="project">
+<email>stefan.cristian at rogentos.ro</email>
+<name>Steven Cristian</name>
+</owner>
+<source type="git">git://github.com/BlackNoxis/atom-package.git</source>
+<source type="git">
+https://BlackNoxis@github.com/BlackNoxis/atom-package.git
+</source>
+<feed>
+</feed>
+</repo>
+</repositories>
