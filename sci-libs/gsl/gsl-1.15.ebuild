@@ -125,6 +125,7 @@ src_install() {
 	doins cblas.pc || die "installing cblas.pc failed"
 	eselect cblas add $(get_libdir) "${T}"/eselect.cblas.gsl \
 		${ESELECT_PROF}
+	die
 }
 
 pkg_postinst() {

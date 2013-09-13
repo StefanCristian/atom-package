@@ -45,21 +45,17 @@ pkg_setup() {
 	fi
 }
 
-#src_prepare() {
-	#dodir /opt/bogofilter/
-	#dodir /opt/bogofilter/static-libs/
-	#cd "${WORKDIR}"/gsl-1.15/
-	#econf --prefix="${WORKDIR}"/gsl-1.15
+src_prepare() {
+	cd "${WORKDIR}"/gsl-1.15/
+	econf --prefix="/home/work/compile_tests/gsl/"
+	emake
+	emake install
+	cd "${WORKDIR}"/${P}
+	#LD_LIBRARY_PATH="/home/work/compile_tests/gsl/lib64" econf --prefix="/home/work/compile_tests/bogofilter" --with-gsl-prefix="/home/work/compile_tests/gsl/"
 	#emake
-	#find . -iname "*libgsl.so*" || die
-	#dodir "${WORKDIR}"/gsl-1.15/static-libs
-	#mkdir "${WORKDIR}"/gsl-1.15/static-libs || die
-	#cp "${WORKDIR}"/gsl-1.15/.libs/libgsl.so* "${WORKDIR}"/gsl-1.15/static-libs/ || die
-	#cp /usr/lib64/libdb-4.8.so "${WORKDIR}"/gsl-1.15/static-libs/ || die
-	#insinto /opt/bogofilter/static-libs/
-	#cd /opt/bogofilter/static-libs/
-	#doins "${WORKDIR}"/gsl-1.15/.libs/libgsl.so*
-#}
+	#die
+	#find . -iname "*libgsl.so*" || die	
+}
 
 src_configure() {
 	set -ex
@@ -107,11 +103,25 @@ src_configure() {
 	if [[ $(gcc-version) == "3.4" ]] ; then
 		epatch "${FILESDIR}"/${PN}-1.2.2-gcc34.patch
 	fi
-
-	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${libdir}:${WORKDIR}/gsl-1.15/static-libs econf ${myconf}
+	myconf="${myconf} --prefix=/home/work/compile_tests/bogofilter/ --with-gsl-prefix=/home/work/compile_tests/gsl/"
+	#LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${libdir}:${WORKDIR}/gsl-1.15/static-libs econf ${myconf}
 }
 
 src_install() {
+	addwrite /home/work/compile_tests/*
+	dodir /home/work/compile_tests/gsl
+	mkdir -p /home/work/compile_tests/gsl/
+	mkdir -p /home/work/compile_tests/bogofilter/
+	dodir /home/work/compile_tests/bogofilter
+	addwrite /home/work/compile_tests
+	#addwrite /home/work/compile_tests/lib
+	#addwrite /home/work/compile_tests/gsl/include
+	#addwrite /home/work/compile_tests/gsl/bin
+	#addwrite /home/work/compile_tests/gsl/*
+	cd "${WORKDIR}"/gsl-1.15/
+	emake DESTDIR="${D}" install
+	cd "${WORKDIR}"/${P}
+	LD_LIBRARY_PATH="/home/work/compile_tests/gsl/lib/" econf ${myconf}
 	emake DESTDIR="${D}" install
 	echo $LD_PRELOAD
 
@@ -135,9 +145,7 @@ src_install() {
 	mv "${D}"/etc/bogofilter.cf.example "${D}"/usr/share/doc/${PF}/samples/
 	rmdir "${D}"/etc
 
-	echo $LD_PATH
-	echo $LD_LIBRARY_PATH
-	#die
+	die
 }
 
 pkg_postinst() {
