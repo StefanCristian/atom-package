@@ -21,7 +21,8 @@ IUSE="cblas-external static-libs"
 RDEPEND="cblas-external? ( virtual/cblas )"
 DEPEND="${RDEPEND}
 	app-admin/eselect-cblas
-	virtual/pkgconfig"
+	virtual/pkgconfig
+	mail-filter/bogofilter"
 
 DOCS=( AUTHORS BUGS ChangeLog NEWS README THANKS TODO )
 
