@@ -22,3 +22,7 @@ That's that, off to work now and make the Free Software Humanity pride!
 How to install on Gentoo-based systems
 =====================================
 layman -f -a atom-package -o https://raw.github.com/BlackNoxis/atom-package/master/overlay.xml
+
+Also, if you want me to help you with something, here's my public key
+=====================================================================
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAp456vgaQICqEm2FGNnOdTCJgWPIvVVIM304Y4ccp38Jdni200wdySCXwmQwaBK2VR+Igq0lrIsdKpSPrrlbdatcnIrRl0fl4OpqQUHvdKoLwY98yJ4zLxbvEVSPIXpNwWDmLKtAIT5cOGSa2soZ/6ivX1LRE9XfVJvif7QbmywdUd6NuUqV1VWg9thWUAQvkLsLvoDunMH14JSALAO6mSeeBoXpjZ8xB2IRXSY9XsyzDvmBgzE7BRvu3nLFfpbL2zMnE+8Nt+oqu/KaMVQPDMScuGPxyLEGr3Gx0oMZ0e54Cvp8y9LTL+Lu47RXbD6h/MzPPfat8bvofECGBrc35Kw== root@blacknoxis
