@@ -19,7 +19,6 @@ or auxiliary deps.
 
 That's that, off to work now and make the Free Software Humanity pride!
 
-
 How to install on Gentoo-based systems
 =====================================
 layman -f -a atom-package -o https://raw.github.com/BlackNoxis/atom-package/master/overlay.xml
