@@ -61,16 +61,6 @@ src_prepare() {
 	epatch "${FILESDIR}"/${MY_P}-cblas.patch
 	eautoreconf --help
 
-	echo "Here's the compiler ${tc-getCC}"
-	echo "Here are some variables ${tc-getPKG_CONFIG}"
-	ls ${get_libdir}
-	./configure --help
-	#echo ${CG_COMPILER_EXE}
-	#echo $($(tc-getPKG_CONFIG) --libs)
-	#find /"${WORKDIR}" -iname "*.c" -exec grep "include" '{}' \; | cut -d '<' -f 2 | cut -d '>' -f 1 | cut -d '"' -f 2 | sort -u
-	#find "${WORKDIR}" -iname "*.cpp"
-	#die
-
 	cp "${FILESDIR}"/eselect.cblas.gsl "${T}"/
 	sed -i -e "s:/usr:${EPREFIX}/usr:" "${T}"/eselect.cblas.gsl || die
 	if [[ ${CHOST} == *-darwin* ]] ; then
@@ -80,34 +70,14 @@ src_prepare() {
 }
 
 src_configure() {
-	dodir /opt/gsl
-	dodir /opt/gsl/etc
-	insinto /opt/gsl
-	dodir "${WORKDIR}"/opt/gsl/
-	dodir "${D}"/opt/gsl/
 	if use cblas-external; then
-		dodir /opt/gsl-bogofilter-atom/
-		dodir /opt/gsl-bogofilter-atom/bin
-		dodir /opt/gsl-bogofilter-atom/share
-		dodir /opt/gsl-bogofilter-atom/etc
-		dodir /opt/gsl-bogofilter-atom/var
-		dodir /opt/gsl-bogofilter-atom/var/lib
-		dodir /opt/gsl-bogofilter-atom/lib
-		dodir /opt/gsl-bogofilter-atom/lib64
-		dodir /opt/gsl-bogofilter-atom/share/info
-		dodir /opt/gsl-bogofilter-atom/share/man
-		insinto /opt/gsl-bogofilter-atom/etc/
 		export CBLAS_LIBS="$($(tc-getPKG_CONFIG) --libs cblas)"
 		export CBLAS_CFLAGS="$($(tc-getPKG_CONFIG) --cflags cblas)"
 	fi
 	econf \
+		--prefix=/opt/bogofilter \
+		--libdir=/opt/bogofilter/atom-libs \
 		--enable-shared \
-		--prefix=/opt/gsl-bogofilter-atom \
-		#--infodir=/opt/gsl/share/info \
-		#--datadir=/opt/gsl/share \
-		--sysconfdir=/opt/gsl-bogofilter-atom/etc \
-		#--localstatedir=/opt/gsl/var/lib \
-		#--libdir=/opt/gsl/lib64 \
 		$(use_with cblas-external cblas) \
 		$(use_enable static-libs static)
 }
@@ -124,14 +94,11 @@ src_install() {
 		-e "/^libdir=/s:=:=${EPREFIX}:" \
 		"${FILESDIR}"/cblas.pc.in > cblas.pc \
 		|| die "sed cblas.pc failed"
-	#insinto /usr/$(get_libdir)/blas/gsl
-	#doins cblas.pc || die "installing cblas.pc failed"
-	#$(tc-getLD) --version --verbose
-	#insinto /opt/gsl/$(get_libdir)/blas/gsl
-	#doins cblas.pc || die "installing cblas.pc failed"
-	#eselect cblas add $(get_libdir) "${T}"/eselect.cblas.gsl \
-	#	${ESELECT_PROF}
-	#die
+	insinto /opt/bogofilter/$(get_libdir)/blas/gsl
+	doins cblas.pc || die "installing cblas.pc failed"
+	eselect cblas add $(get_libdir) "${T}"/eselect.cblas.gsl \
+		${ESELECT_PROF}
+	echo $EPREFIX
 }
 
 pkg_postinst() {
