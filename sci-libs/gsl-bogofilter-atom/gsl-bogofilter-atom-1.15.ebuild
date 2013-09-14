@@ -80,12 +80,17 @@ src_configure() {
 		--enable-shared \
 		$(use_with cblas-external cblas) \
 		$(use_enable static-libs static)
+	echo $EPREFIX
+	echo $EROOT
 }
 
 src_install() {
 	default
 
 	find "${ED}" -name '*.la' -exec rm -f {} +
+	rm -rf ${ED}/usr/
+	rm -rf ${ED}/opt/bogofilter/bin
+	rm -rf ${ED}/opt/bogofilter/include
 
 	# take care of pkgconfig file for cblas implementation.
 	sed -e "s/@LIBDIR@/$(get_libdir)/" \
@@ -94,11 +99,20 @@ src_install() {
 		-e "/^libdir=/s:=:=${EPREFIX}:" \
 		"${FILESDIR}"/cblas.pc.in > cblas.pc \
 		|| die "sed cblas.pc failed"
-	insinto /opt/bogofilter/$(get_libdir)/blas/gsl
+	echo $get_libdir
+	ls $libdir
+	insinto /opt/bogofilter/atom-libs/blas/gsl
 	doins cblas.pc || die "installing cblas.pc failed"
 	eselect cblas add $(get_libdir) "${T}"/eselect.cblas.gsl \
 		${ESELECT_PROF}
-	echo $EPREFIX
+	rm -rf opt/bogofilter/include/gsl
+	rm -rf usr/lib/debug/opt/bogofilter/bin/gsl*
+	rm -rf usr/lib/debug/opt/bogofilter/atom-libs
+	rm usr/share/aclocal/gsl.m4
+	rm -rf usr/share/doc/gsl*
+	rm -rf usr/share/info/gsl*
+	rm -rf usr/share/man/man1/gsl*
+	rm -rf usr/share/man/man3/gsl*
 }
 
 pkg_postinst() {
