@@ -89,7 +89,7 @@ src_install() {
 
 	find "${ED}" -name '*.la' -exec rm -f {} +
 	rm -rf ${ED}/usr/
-	rm -rf ${ED}/opt/bogofilter/bin
+	#rm -rf ${ED}/opt/bogofilter/bin
 	rm -rf ${ED}/opt/bogofilter/include
 
 	# take care of pkgconfig file for cblas implementation.

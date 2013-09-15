@@ -106,6 +106,9 @@ src_install() {
 	dodir /usr/share/doc/${PF}/samples
 	mv "${D}"/etc/bogofilter.cf.example "${D}"/usr/share/doc/${PF}/samples/
 	rmdir "${D}"/etc
+
+	addwrite /opt/bogofilter/bin/
+	rm /opt/bogofilter/bin/gsl-*
 }
 
 pkg_postinst() {
