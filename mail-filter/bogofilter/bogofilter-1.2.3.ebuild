@@ -87,12 +87,12 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${D}" install
 
-	exeinto /usr/share/${PN}/contrib
+	exeinto /opt/${PN}/contrib
 	doexe contrib/{bogofilter-qfe,parmtest,randomtrain}.sh \
 		contrib/{bfproxy,bogominitrain,mime.get.rfc822,printmaildir}.pl \
 		contrib/{spamitarium,stripsearch}.pl
 
-	insinto /usr/share/${PN}/contrib
+	insinto /opt/${PN}/contrib
 	doins contrib/{README.*,dot-qmail-bogofilter-default} \
 		contrib/{bogogrep.c,bogo.R,bogofilter-milter.pl,*.example} \
 		contrib/vm-bogofilter.el \
