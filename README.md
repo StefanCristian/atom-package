@@ -17,7 +17,7 @@ complete and installation will occur smoother. And also reconfiguration will be 
 The main idea is to have all the needed files put into a single package, including the needed files from other deps
 or auxiliary deps.
 
-That's that, off to work now and make the Free Software Humanity pride!
+That's that, off to work now and make the Free Software Humanity proud!
 
 How to install on Gentoo-based systems
 =====================================
