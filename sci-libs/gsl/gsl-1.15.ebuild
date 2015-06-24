@@ -71,7 +71,7 @@ src_configure() {
 	econf \
 		--prefix=/opt/bogofilter \
 		--libdir=/opt/bogofilter/atom-libs \
-		--enable-shared \
+		--disable-shared \
 		$(use_with cblas-external cblas) \
 		$(use_enable static-libs static)
 }
